@@ -1,0 +1,22 @@
+connect
+
+/subsystem=security/security-domain=MySqlBoilerplateSecurityDomain:add(cache-type=default)
+
+reload
+
+/subsystem=security/security-domain=MySqlBoilerplateSecurityDomain/authentication=classic: \
+	add( \
+		login-modules=[{ \
+			"code"=>"Remoting", \
+			"flag"=>"optional", \
+			"module-options"=>[ \
+				("password-stacking"=>"useFirstPass") \
+				]}, \
+			{ \
+			"code"=>"org.rg.archetype.jboss.auth.LoginModule", \
+			"flag"=>"required", \
+			"module-options"=>[ \
+				("dsJndiName"=>"java:/MySqlBoilerplateDS") \
+				]}]
+
+reload
